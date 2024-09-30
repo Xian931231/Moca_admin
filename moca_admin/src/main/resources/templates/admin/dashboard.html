@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+  <th:block layout:fragment="content">
+    <main class="main-panel">
+      <div class="pagePath">
+         대시보드
+      </div>
+      <div class="content dashboard">
+        <div class="titleCont">
+          <h2> 대시보드 <span id="dashboardDate"></span>
+            <i class="dateReset" data-src="dashboard" data-act="clickResetDate"></i>
+            <!-- i.dataSetup 설정 버튼 아이콘,
+                 당장 사용치 않는다 하여 주석처리함 -->
+            <!--<i class="dataSetup"></i>-->
+          </h2>
+        </div>
+        <!--대시보드 - 섹션1-->
+        <section class="dash1 dash">
+          <article>
+            <ul class="dashTabs">
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/campaign/inspection" data-type="WC" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>승인 대기 / 완료</p>
+                    <!-- 건수가 있을 때 = <i>3</i>
+                    건수가 없을 때 때  = 0
+                    -->
+                    <p>
+                      <span id="request"></span> 건
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/campaign/inspection" data-type="PC" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>입금 대기 / 완료</p>
+                    <!-- 건수가 있을 때 = <i>3</i>
+                    건수가 없을 때 때  = 0
+                    -->
+                    <p>
+                      <span id="deposit"></span> 건
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/campaign/inspection" data-type="RC" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>환불 대기 / 완료</p>
+                    <p>
+                      <span id="refund"></span> 건
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/ssp/approval" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>매체 승인대기 / 당월 승인</p>
+                    <p>
+                      <span id="supply"></span> 건
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/ssp/balance" data-type="OM" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>정산임박 매체</p>
+                    <p>
+                      <span id="balance"></span> 건
+                    </p>
+                  </div>
+                </a>
+              </li>
+              <li class="dash-item">
+                <a class="dash-link" data-src="dashboard" data-act="clickCard" data-href="/ssp/device" href="javascript:;">
+                  <div class="dashTabsBtn">
+                    <p>장비 오류 / 정상</p>
+                    <p>
+                      <span id="device"></span> 개
+                    </p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </article>
+          <article>
+            <div>
+              <p>CPP</p>
+              <div id="chartCpp" class="chartDashWrap">
+              </div>
+              <p class="centerPie cp1">
+                <span>종료예정</span>
+                <span id="endCpp"></span>
+              </p>
+              <p id="totalCpp"></p>
+            </div>
+            <div>
+              <p>CPM</p>
+              <div id="chartCpm" class="chartDashWrap">
+              </div>
+              <p class="centerPie cp2">
+                <span>종료예정</span>
+                <span id="endCpm"></span>
+              </p>
+              <p id="totalCpm"></p>
+            </div>
+          </article>
+        </section>
+        <!--대시보드 - 섹션2-->
+        <section class="dash2 dash">
+          <div class="rollingDate">
+            <div class="rollingDateWrap">
+              <ul id="standardMonth" style="margin-left: -58px">
+              </ul>
+            </div>
+            <span class="rollingPrev" data-src="dashboard" data-act="prevMonth">
+              <img src="assets/imgs/icon-dashArrow-pr.jpg" alt="">
+            </span>
+            <span class="rollingNext" data-src="dashboard" data-act="nextMonth">
+              <img src="assets/imgs/icon-dashArrow-ne.jpg" alt="">
+            </span>
+          </div>
+          <article>
+            <p>
+              <span>총 노출 수&nbsp; <span id="exposureTotal"></span>&nbsp; <i>회</i>
+              </span>
+            </p>
+            <div id="exposureChart" class="chartDashWrap">
+              <ul class="chartLabeling">
+                <li><span></span>당월</li>
+                <li><span></span>전월</li>
+                <li><span></span>전전월</li>
+              </ul>
+            </div>
+          </article>
+          <article>
+            <p>
+              <span>총 집행금액&nbsp; <span id="priceTotal"></span>&nbsp; <i>원</i>
+              </span>
+            </p>
+            <div id="priceChart" class="chartDashWrap">
+              <ul class="chartLabeling">
+                <li><span></span>당월</li>
+                <li><span></span>전월</li>
+                <li><span></span>전전월</li>
+              </ul>
+            </div>
+          </article>
+        </section>
+        <!--대시보드 - 섹션3-->
+        <section class="dash3">
+          <div class="dashMapSum">
+            <div class="dash3-header">
+              <ul>
+                <li>
+                  <p>운영중인 매체 수</p>
+                  <p id="totalSupply"></p>
+                </li>
+                <li>
+                  <p>운영중인 상품 수</p>
+                  <p id="totalProduct"></p>
+                </li>
+              </ul>
+            </div>
+            <div class="dash3-filteringWrap">
+              <div id="mapDate" class="dash3-header2" data-src="dahboard" data-act="clickResetMapDate">
+              </div>
+              <div class="dash3-filtering f1">
+                <p>지역 선택</p>
+                <ul>
+                  <li>
+                    <select name="area" id="siCategory" class="selectpicker" title="시 단위" data-size=10 data-src="dashboard" data-act="changeSi">
+                    </select>
+                  </li>
+                  <li>
+                    <select name="area" id="guCategory" class="selectpicker" title="군/구 단위" data-size=10 data-src="dashboard" data-act="changeGu">
+                      <option value="all">전체 지역</option>
+                    </select>
+                  </li>
+                </ul>
+              </div>
+              <div class="dash3-filtering f2">
+                <p>매체 / 구분별</p>
+                <div>
+                  <ul id="supplyBody" class="dash3-accordion">
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div id="map" class="dashMapWrap">
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </th:block>
+  <th:block layout:fragment="script">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7ns6lqd6n8"></script>
+    <script th:src="@{/js/page/admin/dashboard.js}"></script>
+    <script>
+    	layout.setCallback(dashboard.init);
+    </script>
+  </th:block>
+</html>

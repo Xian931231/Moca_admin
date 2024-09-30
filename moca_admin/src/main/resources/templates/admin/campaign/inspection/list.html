@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <main class="main-panel moCafePanel">
+      <div class="pagePath">
+        광고 관리<span>&gt;</span>소재 검수 / 승인
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>소재 검수 / 승인</h2>
+        </div>
+        <div class="tab-content advTablesCpm moCafeCont">
+          <div class="moCafeFormWrap">
+            <form action="" class="f-single" onsubmit="return false">
+              <fieldset>
+                <legend class="blind">검색</legend>
+                <span class="grSearch">
+                  <select name="payStatus" id="payStatus" class="selectpicker" title="입금 상태">
+                    <option value="">전체</option>
+                    <option value="PAY_WAIT">입금 대기</option>
+                    <option value="PAY_COMPLETE">입금 완료</option>
+                    <option value="REFUND_WAIT">환불 대기</option>
+                    <option value="REFUND_COMPLETE">환불 완료</option>
+                  </select>
+                  <select name="sgStatus" id="sgStatus" class="selectpicker" title="승인 상태">
+                    <option value="">전체</option>
+                    <option value="0">승인 대기</option>
+                    <option value="9">승인 거부</option>
+                    <option value="1">승인 완료</option>
+                  </select>
+                  <input type="search" id="sgName" data-src="list" data-act="inputSearch"><button type="button" class="btn-sm" data-src="list" data-act="clickSearch">검색</button>
+                </span>
+              </fieldset>
+            </form>
+          </div>
+          <!-- 소재/검수 승인 테이블 / 시작 -->
+          <div class="tableWrap chk">
+            <div class="tableInner" id="listTable">
+              <table class="table">
+                <colgroup>
+                  <col width="120px">
+                  <col width="120px">
+                  <col width="56px">
+                  <col width="300px">
+                  <col width="90px">
+                  <col width="90px">
+                  <col width="90px">
+                  <col width="100px">
+                  <col width="116px">
+                  <col width="*">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>소속 대행사</th>
+                    <th>광고주</th>
+                    <th>과금<br />방식</th>
+                    <th>광고명</th>
+                    <th>광고신청<br />일자</th>
+                    <th>광고시작<br />요청일</th>
+                    <th>광고종료<br />요청일</th>
+                    <th>집행요청금액<br />(VAT별도)</th>
+                    <th>입금 상태</th>
+                    <th>승인 현황</th>
+                  </tr>
+                </thead>
+                <tbody id="listBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!--<div class="btnBtmWrap">
+            <button type="button" class="btn-lg btn-dark">EXCEL로 다운 받기</button>
+          </div>-->
+          <!-- 소재/검수 승인 테이블 / 끝 -->
+          <!-- 페이지네이션 / 시작 -->
+          <nav aria-label="Page navigation">
+            <ul id="listPage" class="pagination justify-content-center">
+            </ul>
+          </nav>
+          <!-- 페이지네이션 / 끝 -->
+        </div>
+        <!--테이블 내 버튼 모달 : 시작-->
+        <!--승인 완료 버튼 모달 : 시작-->
+        <div class="modal fade depoModal" id="rejectReasonModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="depo2Label" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">승인 거부 사유</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <fieldset>
+                    <legend class="blind">승인 거부 사유 입력하기</legend>
+                    <div class="vdSetWrap depo">
+                      <textarea class="commonTextarea" cols="100" rows="5" placeholder="승인 거부 사유를 입력하세요" id="rejectReason"></textarea>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-clear" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-sm btn-dark" data-src="list" data-act="clickReject">승인 거부</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--승인 완료 버튼 모달 : 끝-->
+        <!--승인완료 상태를 승인거부로 바꿀 때 뜨는 멀티모달 : 시작-->
+        <div class="modal fade" id="depoRej" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="depoRejLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>이미 진행된 광고는 거부하실 수 없습니다.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-dark btn-overflow" data-dismiss="modal">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--승인완료 상태를 승인거부로 바꿀 때 뜨는 멀티모달 : 끝-->
+        <!--승인 거부 버튼 모달 : 시작-->
+        <div class="modal fade depoModal" id="rejectReasonModifyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modalInputFile">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">승인 거부 사유</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <fieldset>
+                    <legend class="blind">승인 거부 사유 입력하기</legend>
+                    <div class="vdSetWrap depo">
+                      <textarea class="commonTextarea" cols="100" rows="5" id="modifyRejectReason"></textarea>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-clear" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-sm btn-dark" data-src="list" data-act="clickRejectModify">내용 수정</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--승인 거부 버튼 모달 : 끝-->
+        <!--입금 상태 = 입금 대기일 때 뜨는 모달 : 시작-->
+        <div class="modal fade depoModal" id="depositModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modalInputFile">
+            <div class="modal-content">
+              <div class="modal-header">
+                <!--<h5 class="modal-title">입금 상태 변경하기</h5>-->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <fieldset>
+                    <legend class="blind">입금 상태 변경하기</legend>
+                    <ul class="vdSetWrap depo depoState">
+                      <li>
+                        <span>상태</span>
+                        <div class="costState">
+                          <select name="payStatusSelect" id="payStatusSelect" class="selectpicker">
+                          </select>
+                        </div>
+                      </li>
+                      <li>
+                        <span>내용</span><textarea name="payNotes" id="payNotes"></textarea> 
+                      </li>
+                      <li>
+                        <span>금액</span><span id="price"></span>
+                      </li>
+                    </ul>
+                  </fieldset>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-clear" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-sm btn-dark" data-src="list" data-act="modifyPayStatus">내용 수정</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--입금 상태 = 입금 대기일 때 뜨는 모달 : 끝-->
+        <!--테이블 내 버튼 모달 : 끝-->
+      </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/js/page/admin/campaign/inspection/list.js}"></script>
+	<script>
+		layout.setCallback(campaignInspectionList.init);
+	</script>
+</th:block>
+</html>

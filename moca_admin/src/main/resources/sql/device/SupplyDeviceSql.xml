@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mocafelab.admin.device.SupplyDeviceMapper">
+
+	<!-- 매체현황 > 장비 오류 현황 리스트 -->
+	<select id="getDeviceErrorList" parameterType="HashMap" resultType="HashMap">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY 
+			<choose>
+				<when test='product_sort == "PA" and error_sort == null'>
+					sp.product_name DESC, sd.update_date ASC
+				</when>
+				<when test='error_sort == "EA" and product_sort == null'>
+					sd.update_date DESC
+				</when>
+				<when test='product_sort == "PD" and error_sort == null'>
+					sp.product_name ASC, sd.update_date ASC
+				</when>
+				<otherwise>
+					sd.update_date ASC, sp.product_name ASC				
+				</otherwise>
+			</choose>
+			) AS seq
+			, sp.product_name 
+			, sd.serial_number 
+			, sd.status 
+			, to_char(sd.update_date, 'HH24:MI:SS') AS update_date
+		FROM
+			public.ssp_device sd
+		JOIN public.ssp_product sp
+		ON sp.id = sd.product_id 
+		WHERE
+			(sd.status = 'R' OR sd.status = 'D')
+		AND to_char(sd.update_date, 'YYYY-MM-DD') = to_char(#{standard_date}::date - interval '1 days', 'YYYY-MM-DD')
+		AND sd.member_id = #{login_id}::bigint
+		ORDER BY 
+		<choose>
+			<when test='product_sort == "PA" and error_sort == null'>
+					sp.product_name ASC, sd.update_date DESC
+				</when>
+				<when test='error_sort == "EA" and product_sort == null'>
+					sd.update_date ASC
+				</when>
+				<when test='product_sort == "PD" and error_sort == null'>
+					sp.product_name DESC, sd.update_date DESC
+				</when>
+			<otherwise>
+				sd.update_date DESC, sp.product_name DESC				
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 매체현황 > 장비 오류 현황 개수 -->
+	<select id="getDeviceErrorCnt" parameterType="HashMap" resultType="Integer">
+		SELECT
+			COUNT(*) 
+		FROM
+			public.ssp_device sd
+		JOIN public.ssp_product sp
+		ON sp.id = sd.product_id 
+		WHERE
+			(sd.status = 'R' OR sd.status = 'D')
+		AND to_char(sd.update_date, 'YYYY-MM-DD') = to_char(#{standard_date}::date - interval '1 days', 'YYYY-MM-DD')
+		AND sd.member_id = #{login_id}::bigint
+	</select>
+
+	<!-- 상품관리 > 디바이스 관리 목록 > 게재위치 -->
+	<select id="getMotorList" parameterType="HashMap" resultType="HashMap">
+		SELECT 
+			  sm.id AS motor_id
+			, sm.car_number
+		FROM 
+			public.ssp_motor sm
+		WHERE 
+			sm.member_id = #{login_id}::bigint
+		ORDER BY sm.insert_date DESC
+	</select>
+	
+	<!-- 상품관리 > 디바이스 관리 목록 -->
+	<select id="getDeviceList" parameterType="HashMap" resultType="HashMap">
+		SELECT
+		      device_t.*
+			, sp.product_name 
+			, sp.screen_resolution 
+			, to_char(sp.insert_date, 'YYYY-MM-DD HH24:MI:SS') AS insert_date
+			, coalesce (schedule_t.slot_cnt, 0) AS slot_cnt
+		<include refid="device_list_where"></include>
+		ORDER BY sp.insert_date DESC, device_t.motor_insert_date DESC, device_t.device_id DESC
+		<if test='limit != null and offset != null'>
+		LIMIT #{limit} OFFSET #{offset}
+		</if>	
+	</select>
+	
+	<!-- 상품관리 > 디바이스 관리 개수 -->
+	<select id="getDeviceCnt" parameterType="HashMap" resultType="Integer">
+		SELECT
+			COUNT(*)
+		<include refid="device_list_where"></include>
+	</select>
+	
+	<!-- 상품관리 > 디바이스 관리 where -->
+	<sql id="device_list_where">
+		FROM public.ssp_product sp
+		JOIN (SELECT 
+				  sd.id AS device_id
+				, sd.product_id
+				, sd.serial_number
+				, sd.status 
+				, sd.notes
+				, coalesce (sm.id, 0) AS motor_id
+				, sm.car_number 
+				, sm.insert_date AS motor_insert_date
+				, sd.member_id
+			FROM public.ssp_device sd
+			LEFT JOIN public.ssp_motor sm
+			ON sm.id = sd.motor_id) AS device_t
+		ON device_t.product_id = sp.id 
+		LEFT JOIN (SELECT 
+						  sp2.product_id
+						, s.cpp_slot_count + s.cpm_slot_count AS slot_cnt
+					FROM 
+						public.schedule_product sp2 
+					JOIN public.schedule s
+					ON s.id = sp2.schedule_id) AS schedule_t
+		ON schedule_t.product_id = sp.id 
+		<where>
+			<if test='login_utype == "S"'>
+				AND device_t.member_id = #{login_id}::bigint
+			</if>
+			<if test='status != null and status != ""'>
+			AND device_t.status = #{status}
+			</if>
+			<choose>
+				<when test='search_type == "P" and search_value != null and search_value != ""'>
+					AND sp.product_name LIKE CONCAT ('%', #{search_value}, '%')
+				</when>
+				<when test='search_type == "S" and search_value != null and search_value != ""'>
+					AND device_t.serial_number LIKE CONCAT ('%', #{search_value}, '%')
+				</when> 
+				<when test='search_type == "C" and search_value != null and search_value != ""'>
+					AND device_t.car_number LIKE CONCAT ('%', #{search_value}, '%')
+				</when> 
+			</choose>
+		</where> 
+	</sql>
+</mapper>

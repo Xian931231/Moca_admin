@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="content">
+        <main class="main-panel">
+            <div class="pagePath">
+                매체 관리<span>&gt;</span>광고 오류 조회
+            </div>
+            <div class="content">
+                <div class="titleCont">
+                    <h2>광고 오류 조회</h2>
+                </div>
+                <div class="tab-content advTablesCpm">
+                    <div class="management acc error">
+                        <div class="moCafeFormWrap">
+                            <form action="">
+                                <span class="input-daterange" id="datepicker1">
+                                <label for="sDate">
+                                <input id="searchStartDate" type="text" class="sDate form-control" name="start" placeholder="" readonly="readonly"><i></i>
+                                </label>
+                                <span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+                                <label for="eData">
+                                <input id="searchEndDate" type="text" class="eDate form-control" name="end" placeholder="" readonly="readonly"><i></i>
+                                </label>
+                                </span>
+                                <fieldset>
+                                  <legend class="blind">검색</legend>
+                                  <span class="selectFinWrap">
+                                    <select id="searchType" class="selectpicker">
+                                      <option value="1" selected>매체명</option>
+                                      <option value="2">분류명</option>
+                                      <option value="3">상품명</option>
+                                      <option value="4">디바이스S/N</option>
+                                      <option value="5">광고명</option>
+                                    </select>
+                                  </span>
+                                  <span class="grSearch">
+                                    <input id="searchValue" type="search" data-src="list" data-act="inputSearch">
+                                    <button type="button" class="btn-sm" data-src="list" data-act="clickSearch">검색</button>
+                                  </span>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <!-- 테이블 / 시작 -->
+                        <div class="tableWrap">
+                            <div class="tableInner">
+                                <table class="table advTable9">
+                                    <colgroup>
+                                        <col width="100px">
+                                        <col width="60px">
+                                        <col width="90px">
+                                        <col width="200px">
+                                        <col width="100px">
+                                        <col width="50px">
+                                        <col width="180px">
+                                        <col width="50px">
+                                        <col width="100px">
+                                        <col width="100px">
+                                        <col width="100px">
+                                        <col width="*">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>날짜</th>
+                                            <th>매체</th>
+                                            <th>분류</th>
+                                            <th>상품명</th>
+                                            <th>디바이스S/N</th>
+                                            <th>과금</th>
+                                            <th>광고명</th>
+                                            <th>영상</th>
+                                            <th>재생시작</th>
+                                            <th>재생종료</th>
+                                            <th>오차</th>
+                                            <th>상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- 전체 / 끝 -->
+                        <!-- 페이지네이션 / 시작 -->
+                        <nav aria-label="Page navigation">
+                            <ul id="listPage" class="pagination justify-content-center">
+                            </ul>
+                        </nav>
+                        <!-- 페이지네이션 / 끝 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/page/admin/supply/abnormal/list.js}"></script>
+        <script>
+            layout.setCallback(abnormalList.init);
+        </script>
+    </th:block>
+</html>

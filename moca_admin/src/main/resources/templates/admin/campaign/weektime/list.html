@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+	<main class="main-panel">
+      <div class="pagePath">
+        광고 관리<span>&gt;</span>시간옵션 관리
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>선택 불가 시간대 설정</h2>
+        </div>
+        <div class="adv-content cppCpm">
+          <div class="formWrap">
+            <form action="">
+              <!--노출 시간대 설정 사용 시 나타나는 시간 선택 레이아웃-->
+              <div class="timeBoxWrap mocafe" id="timeBoxWrap">
+                <table>
+                  <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>시간 / 요일</th>
+                      <th data-id="monday" class="day monday">
+                        월
+                      </th>
+                      <th data-id="tuesday" class="day tuesday">
+                        화
+                      </th>
+                      <th data-id="wednesday" class="day wednesday">
+                        수
+                      </th>
+                      <th data-id="thursday" class="day thursday">
+                        목
+                      </th>
+                      <th data-id="friday" class="day friday">
+                        금
+                      </th>
+                      <th data-id="saturday" class="day saturday">
+                        토
+                      </th>
+                      <th data-id="sunday" class="day sunday">
+                        일
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="listBody">
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" class="btn-sm btn-dark optTimeReset" data-src="weektimeList" data-act="clickInitTime">시간 선택 초기화</button>
+              <div class="btnGroupTwin">
+                <button type="button" class="btn-lg btn-dark" data-src="weektimeList" data-act="clickModifyWeekTime">
+                  저장
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/js/page/admin/campaign/weektime/list.js}"></script>
+	<script>
+		layout.setCallback(weektimeList.init);
+	</script>
+</th:block>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="content">
+		<main class="main-panel moCafePanel">
+	      <div class="pagePath">
+	        매체 관리<span>&gt;</span>디바이스 별 현황
+	      </div>
+	      <div class="content device">
+	        <div class="titleCont">
+	          <h2>디바이스 별 현황</h2>
+	        </div>
+	        <div class="tab-content">
+	          <div class="advTablesCpm tab-pane fade show active" id="agTabs1">
+	            <div class="management device">
+	              <div class="moCafeFormWrap device">
+	                <!-- <form action=""> -->
+	                  <div class="approvalWrap">
+	                    <span class="device-text">상태 &nbsp;:&nbsp;</span>
+	                    <ul class="" id="statusGroup">
+	                      <li class="btnCtrlWrap">
+	                        <a href="javascript:;">
+	                          <button type="button" class="btn btn-sm active" value="" data-src="deviceList" data-act="clickStatusSearch">전체</button>
+	                        </a>                  
+	                      </li>
+	                      <li class="btnCtrlWrap">
+	                        <a href="javascript:;">
+	                          <button type="button" class="btn btn-sm" value="Y" data-src="deviceList" data-act="clickStatusSearch">정상</button>
+	                        </a>                  
+	                      </li>
+	                      <li class="btnCtrlWrap">
+	                        <a href="javascript:;">
+	                          <button type="button" class="btn btn-sm" value="R" data-src="deviceList" data-act="clickStatusSearch">수리중</button>
+	                        </a>                  
+	                      </li>
+	                      <li class="btnCtrlWrap">
+	                        <a href="javascript:;">
+	                          <button type="button" class="btn btn-sm" value="D" data-src="deviceList" data-act="clickStatusSearch">폐기</button>
+	                        </a>                  
+	                      </li>           
+	                    </ul>
+	                  </div>
+	                  <fieldset>
+	                    <span class="selectFinWrap">
+	                      <select id="searchType" class="selectpicker">
+	                        <option value="SN" selected>매체명</option>
+	                        <option value="SI">매체ID</option>
+	                        <option value="PN">상품명</option>
+	                        <option value="DS">S/N</option>
+	                        <option value="CN">게재 위치</option>
+	                      </select>
+	                    </span>
+	                    <legend class="blind">검색</legend>
+	                    <span class="grSearch">
+	                      <input type="search" id="searchValue" data-src="deviceList" data-act="keyupSearch"><button type="button" class="btn-sm" data-src="deviceList" data-act="clickSearch">검색</button>
+	                    </span>                    
+	                  </fieldset>
+	                <!-- </form> -->
+	              </div>
+	              <!-- 테이블 / 시작 -->
+	              <div class="accoTableWrap device" id="accoTableWrap">
+	              <div id="accoTableList"></div>
+	            </div>
+	            <!-- 테이블 / 끝 -->
+	            </div>
+	          </div>
+	        <!-- 전체 / 끝 -->
+	          <!-- 페이지네이션 / 시작 -->
+	          <nav aria-label="Page navigation" id="pageNavigation">
+	            <ul class="pagination justify-content-center" id="listPage">
+	            </ul>
+	          </nav>
+	          <!-- 페이지네이션 / 끝 -->
+	      </div>
+	      </div>
+	    <!--상태변경 사유 모달-->
+	    <div class="modal fade depoModal" id="deviceStatusModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	      <div class="modal-dialog device">
+	        <div class="modal-content cutomerAcc device">
+	          <div class="modal-header">
+	            <h2>상태변경 사유</h2>
+	            <span class="device_select">
+		            <select class="selectpicker" id="deviceStatus">
+		            	<option value="Y">정상</option>
+		            	<option value="R">수리중</option>
+		            	<option value="D">폐기</option>
+		            </select>
+	            </span>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	          </div>
+	          <div class="modal-body">
+	            <form action="">
+	              <fieldset>                
+	                <div class="vdSetWrap depo">
+	                  <div class="modal-note2">
+	                    <textarea id="notes" class="commonTextarea" cols="100" rows="3" placeholder="23.05.28 통신 불량으로 입고&#10;23.06.05 수리 완료&#10;23.08.15 폐기"></textarea>
+	                  </div>
+	                </div>
+	              </fieldset>
+	            </form>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-sm btn-clear" data-dismiss="modal" >취소</button>
+	            <button type="button" class="btn btn-sm btn-dark" id="password-btn" data-src="deviceList" data-act="clickChangeDeviceStatus">저장</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    </main>
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/page/admin/supply/device/list.js}"></script>
+        <script>
+            layout.setCallback(deviceList.init);
+        </script>
+    </th:block>
+</html>

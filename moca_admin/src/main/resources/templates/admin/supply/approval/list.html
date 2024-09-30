@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="content">
+	<main class="main-panel moCafePanel">
+      <div class="pagePath">
+        매체 관리<span>&gt;</span>매체 승인
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>매체 승인</h2>
+        </div>
+        <div class="tab-content advTablesCpm">
+          <div class="management approval">
+              <div class="moCafeFormWrap">
+                <!-- <form action=""> -->
+                  <div class="approvalWrap">
+                    <ul class="">
+                      <li class="btnCtrlWrap">
+                        <a href="javascript:;" data-src="list" data-act="clickStatusSearch" data-status="">
+	                      <button type="button" class="btn btn-sm active">전체</button>
+	                  	</a>               
+                      </li>
+                      <li class="btnCtrlWrap">
+                        <a href="javascript:;" data-src="list" data-act="clickStatusSearch" data-status="V">
+	                      <button type="button" class="btn btn-sm">승인대기</button>
+	                  	</a>                 
+                      </li>
+                      <li class="btnCtrlWrap">
+                        <a href="javascript:;" data-src="list" data-act="clickStatusSearch" data-status="A">
+                    	  <button type="button" class="btn btn-sm">승인완료</button>
+                  		</a>                 
+                      </li>
+                      <li class="btnCtrlWrap">
+                        <a href="javascript:;" data-src="list" data-act="clickStatusSearch" data-status="X">
+                    	  <button type="button" class="btn btn-sm">승인거부</button>
+                  		</a>                    
+                      </li>           
+                    </ul>
+                  </div>
+                  <fieldset>                  
+                    <legend class="blind">조회</legend>
+                    <span class="grSearch">
+                      <input type="search" id="searchValue" data-src="list" data-act="inputSearch"><button type="button" class="btn-sm" data-src="list" data-act="clickSearch">검색</button>
+                    </span>                    
+                  </fieldset>
+                <!-- </form> -->
+              </div>      
+          
+          <!-- 테이블 / 시작 -->
+          <div class="tableWrap">
+            <div class="tableInner">
+              <table class="table approval advTable8">
+                <colgroup>
+                  <col width="60px">
+                  <col width="180px">
+                  <col width="200px">
+                  <col width="280px">
+                  <col width="280px">
+                  <col width="*">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>매체명</th>
+                    <th>ID</th>
+                    <th>가입일시</th>
+                    <th>처리일시</th>
+                    <th>승인상태</th>
+                  </tr>
+                </thead>
+                <tbody id="tableList">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 전체 / 끝 -->
+          <!-- 페이지네이션 / 시작 -->
+          <nav aria-label="Page navigation">
+            <ul id="listPage" class="pagination justify-content-center">
+            </ul>
+          </nav>
+          <!-- 페이지네이션 / 끝 -->
+        </div>
+      </div>
+      <!--승인대기 모달-->
+      <div class="modal fade" id="approveModal" data-keyboard="false" tabindex="-1" aria-labelledby="allCategoryLabel" aria-hidden="true">
+        <div class="modal-dialog cla manga">
+          <div class="modal-content cla">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body cla approval">
+              <form action="">
+                <ul>
+                  <li>
+                    <div>매체명</div>
+                    <span name="companyName"></span>
+                  </li>
+                  <li class="modalSearchBox cla">
+                    <label for="modalSearch">사업자 등록증</label>
+                    <input type="search" name="biznumImage" readonly>
+                    <a href="javascript:;" name="imageLink" data-src="list" data-act="clickImageView">
+                      <button type="button" class="btn-sm btn-dark" id="agency-btn">보기</button>
+                    </a>
+                  </li>
+                  <li>
+                    <div>정산일</div>
+                    <span name="balanceDate"></span>
+                  </li>
+                  <li>
+                    <div>정산 요율</div>
+                    <span name="balanceRate"></span>
+                  </li>
+                  <li>
+                    <div>매체 담당자</div>
+                    <span name="supplyUname"></span>
+                  </li>
+                  <li>
+                    <div>비고</div>
+                    <div class="modal-note">
+                      <textarea class="commonTextarea" cols="100" rows="5" name="approveNotes" id="approveNotes"></textarea>
+                    </div>
+                  </li>               
+                </ul>
+              </form>
+                <div class="sort-btn">
+                  <button type="button" class="btn-sm btn-clear" data-dismiss="modal">취소</button>
+	              <button type="button" class="btn-sm btn-clear" data-src="list" data-act="clickApprove" data-approve="X">승인거부</button>
+	              <button type="button" class="btn-sm btn-dark" data-src="list" data-act="clickApprove" data-approve="A">매체 승인</button>             
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--승인거부 모달-->
+      <div class="modal fade" id="specModal" data-keyboard="false" tabindex="-1" aria-labelledby="allCategoryLabel" aria-hidden="true">
+        <div class="modal-dialog cla manga">
+          <div class="modal-content cla">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body cla approval">
+              <form action="">
+                <ul>
+                  <li>
+                    <div>매체명</div>
+                    <span name="companyName"></span>
+                  </li>
+                  <li class="modalSearchBox cla">
+                    <label for="modalSearch">사업자 등록증</label>
+                    <input type="search" name="biznumImage" readonly>
+                    <a href="javascript:;" name="imageLink" data-src="list" data-act="clickImageView">
+                      <button type="button" class="btn-sm btn-dark" id="agency-btn">보기</button>
+                    </a>
+                  </li>
+                  <li>
+                    <div>정산일</div>
+                    <span name="balanceDate"></span>
+                  </li>
+                  <li>
+                    <div>정산 요율</div>
+                    <span name="balanceRate"></span>
+                  </li>
+                  <li>
+                    <div>매체 담당자</div>
+                    <span name="supplyUname"></span>
+                  </li>
+                  <li>
+                    <div>비고</div>
+                    <div class="modal-note2">
+                      <textarea class="commonTextarea" cols="100" rows="3" name="approveNotes" readonly></textarea>
+                    </div>
+                  </li>               
+                </ul>
+              </form>
+                <div class="sort-btn">
+                  <button type="button" class="btn-sm btn-dark" data-dismiss="modal">확인</button>             
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/js/page/admin/supply/approval/list.js}"></script>
+	<script>
+		layout.setCallback(supplyApprovalList.init);
+	</script>
+</th:block>
+</html>

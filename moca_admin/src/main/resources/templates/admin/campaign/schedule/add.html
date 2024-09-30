@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+	<main class="main-panel">
+      <div class="pagePath">
+        광고 관리<span>&gt;</span>광고 편성 관리<span>&gt;</span>편성표 작성
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>편성표 작성</h2>
+        </div>
+        <div class="adv-content advForms cppCpm">
+          <div class="formWrap formInputInfo formNewMake">
+            <form action="">
+              <div class="innerForm">
+                <ul class="formList newCamp">
+                  <li>
+                    <div>편성표 이름</div>
+                    <div>
+                      <input type="text" id="scheduleName">
+                    </div>
+                  </li>
+                  
+                  <li class="slotMenu">
+                    <div>슬롯 설정</div>
+                    <div class="slotCtrl">
+                      <div class="slotWrap">
+                        <ul id="slotList">
+                        </ul>
+                        <span>
+                          <!--해당 버튼 클릭 시 .slotWrap li 가 하나씩 추가되도록-->
+                          <button type="button" class="btn btn-sm btn-dark btn-slot" data-src="scheduleAdd" data-act="clickAddSlot">슬롯 추가&nbsp; <img src="/assets/imgs/icon_add.png" alt=""></button>
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <li>
+                    <div>반영 상품</div>
+                    <div class="applyPdctWrap">
+                      <div>
+                        <select id="supplyList" class="selectpicker" data-src="scheduleAdd" data-act="changeSupply">
+                        </select>
+                        <select id="categoryList" class="selectpicker" data-src="scheduleAdd" data-act="changeCategory">                          
+                        </select>
+                        <select id="productList" class="selectpicker">                          
+                        </select>
+                        <!--반영 클릭 시 매체 리스트가 하단에 추가됨-->
+                        <button type="button" class="btn-sm btn-dark" data-src="scheduleAdd" data-act="clickProductApply">반영</button>
+                      </div>
+                      <div class="applyPdct">
+                        <ul id="applyProductList">
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="btnGroupTwin">
+                <button type="button" class="btn-lg btn-clear" data-src="scheduleAdd" data-act="clickAddCancle">
+                  취소
+                </button>
+                <button type="button" class="btn-lg btn-dark" data-src="scheduleAdd" data-act="clickAddSchedule">
+                  편성표 저장
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/assets/vendor/sortable/Sortable.min.js}"></script>
+	<script th:src="@{/js/page/admin/campaign/schedule/add.js}"></script>
+	<script>
+		layout.setCallback(scheduleAdd.init);
+	</script>
+</th:block>
+</html>

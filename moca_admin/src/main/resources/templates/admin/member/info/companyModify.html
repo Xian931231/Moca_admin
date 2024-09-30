@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+	<th:block layout:fragment="content">
+		<main class="main-panel moCafePanel">
+			<div class="pagePath">
+        		회원 관리
+      		</div>
+      		<div class="join-all">
+        		<div class="formWrap formInputInfo">
+        			<form class="join-form" onsubmit="return false">          
+            			<h2>사업자 정보</h2>
+           				<div class="innerForm join">
+              				<ul class="join-center">
+                				<li class="join-corporate">
+                  					<span class="form-label">상호(법인명)</span>
+                  					<p id="companyName"></p>
+                				</li>
+                				<li class="join-business_number">
+                  					<span class="form-label">사업자등록번호</span>
+                                    <p id="companyRegnum"></p>
+                				 </li>
+                				 <li class="join-representative">
+                					<span class="form-label">대표자 성명</span>
+                  					<input type="text" class="form-control" name="representative" id="ceoName">
+                                 </li>
+                                 <li class="join-occupation">
+                                    <span class="form-label">업태</span>
+                                    <input type="text" class="form-control" name="occupation" id="bizKind">
+                                 </li>
+                				 <li class="join-business">
+                  					<span class="form-label">업종</span>
+                  					<input type="text" class="form-control" name="business" id="bizType">
+                				 </li>
+                				 <li class="join-address">
+                  					<span class="form-label">사업장 주소</span>
+                  					<div>
+                    				   <input type="text" class="form-control" name="address" id="address1">
+                                       <input type="hidden" class="form-control" name="zipcode" id="zipcode">
+                                       <button type="button" class="userId-btn" data-src="companyModify" data-act="getPostCode">주소 찾기</button>
+                  					</div>
+                				 </li>
+                                 <li class="join-detailed_add">
+                  					<span class="form-label">상세주소</span>
+                 					<input type="text" class="form-control" name="detailed_add" id="address2">
+                				 </li>
+                				 <li class="join-license">
+                  					<span class="form-label">사업자등록증</span>
+                  					<div class="addFile">
+                    				   <input type="file" class="custom-file-input" id="companyRegnumImage" name="filename" accept=".jpg,.pdf,.png" data-src="companyModify" data-act="changeImg">
+                                       <label class="custom-file-label form-control selected" for="companyRegnumImage"></label>
+                  					</div>
+                                    <p id="fileRequest"></p>
+                				 </li>
+              				</ul>
+           				</div>
+            			<ul class="join-box ag">
+							<li>
+                				<a href="javascript:;" data-src="companyModify" data-act="prePage">
+                  					<button type="button" class="previous-btn" >이전 페이지로</button>
+                				</a>
+                				<a href="javascript:;" data-src="companyModify" data-act="modifyCompanyInfo">
+                  					<button type="button" class="license-btn">정보수정 완료</button>
+                				</a>
+              				</li>
+            			</ul>  
+        			</form>
+      			</div>
+      		</div>
+      	<div>
+		</div>
+    </main>
+	</th:block>
+	<th:block layout:fragment="script">
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script th:src="@{/js/page/admin/member/info/companyModify.js}"></script>
+		<script>
+			layout.setCallback(companyModify.init);
+		</script>
+	</th:block>
+</html>

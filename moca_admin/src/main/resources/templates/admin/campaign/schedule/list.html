@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+	    <main class="main-panel moCafePanel">
+      <div class="pagePath">
+        광고 관리<span>&gt;</span>광고 편성 관리<span>&gt;</span>리스트
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>광고 편성 관리</h2>
+        </div>
+        <div class="tab-content advTablesCpm moCafeCont">
+          <div class="moCafeFormWrap">
+            <form action="">
+              <fieldset>
+                <legend class="blind">검색</legend>
+                <span class="makingBtnWrap">
+                  <button type="button" class="btn-sm btn-clear" data-src="scheduleList" data-act="clickRemoveSchedule">
+                    편성표 삭제
+                  </button>
+                  <button type="button" class="btn-sm btn-dark" data-src="scheduleList" data-act="clickMoveAddPage">
+                    신규 편성표 작성
+                  </button>
+                </span>
+              </fieldset>
+            </form>
+          </div>
+          
+          <!-- 소재/검수 승인 테이블 / 시작 -->
+          <div class="tableWrap make make1">
+            <div class="tableInner">
+              <table class="table">
+                <colgroup>
+                  <col width="56px">
+                  <col width="415px">
+                  <col width="120px">
+                  <col width="120px">
+                  <col width="120px">
+                  <col width="180px">
+                  <col width="*">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>
+                      <span class="chk"><input type="checkbox" id="allScheduleCheck" data-src="scheduleList" data-act="changeAllCheckbox"><label for="allScheduleCheck"></label></span>
+                    </th>
+                    <th>편성표 이름</th>
+                    <th>총 슬롯 수</th>
+                    <th>CPP</th>
+                    <th>Block</th>
+                    <th>등록일</th>
+                    <th>적용된 상품</th>
+                  </tr>
+                </thead>
+                <tbody id="listBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 소재/검수 승인 테이블 / 끝 -->
+          <!-- 페이지네이션 / 시작 -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center" id="listPage">
+            </ul>
+          </nav>
+          <!-- 페이지네이션 / 끝 -->
+        </div>
+        <!--적용된 상품 모달 : 시작-->
+        <div class="modal fade depoModal pdctModal" id="applyPdct" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="depoRefLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">적용된 상품 목록</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <fieldset>
+                    <legend class="blind">적용된 상품 목록 보기</legend>
+                    <!--<div class="vdSetWrap depo">
+                      
+                    </div>-->
+                    <div class="tableWrap">
+                        <div class="tableInner">
+                          <table class="table">
+                            <colgroup>
+                              <col width="376px">
+                              <col width="*">
+                            </colgroup>
+                            <thead>
+                              <tr>
+                                <th>상품명</th>
+                                <th>CPP 지정순서</th>
+                              </tr>
+                            </thead>
+                            <tbody id="productListBody">
+                             
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </fieldset>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--적용된 상품 모달 : 끝-->
+        <!-- 편성표 삭제 모달 : 시작 -->
+        <div class="modal fade" id="scheDel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>진행중인 광고가 있는 편성표는 삭제하실 수 없습니다.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 편성표 삭제 모달 : 끝 -->
+      </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/js/page/admin/campaign/schedule/list.js}"></script>
+	<script>
+		layout.setCallback(scheduleList.init);
+	</script>
+</th:block>
+</html>

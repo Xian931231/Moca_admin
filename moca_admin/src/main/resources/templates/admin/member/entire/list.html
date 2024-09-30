@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+	<main class="main-panel moCafePanel">
+		<div class="pagePath">
+			회원 관리<span>&gt;</span>전체 회원정보
+	    </div>
+	    <div class="content">
+			<div class="titleCont">
+	        	<h2>전체 회원정보</h2>
+	   		</div>
+	      	<div class="tab-content advTablesCpm">
+	        	<div class="management approval mambership">
+	        		<div class="moCafeFormWrap ctrl">
+			            <div class="approvalWrap">
+	       		      		<ul class="">
+	                			<li class="btnCtrlWrap mambership">
+	                  				<a href="javascript:;">
+	                    				<button type="button" class="btn btn-sm active" name="searchType" id="allCnt" data-type="" data-src="allMemberList" data-act="clickTypeBtn"></button>
+	                  				</a>                  
+	                			</li>
+	                			<li class="btnCtrlWrap mambership">
+	                  				<a href="javascript:;">
+	                    				<button type="button" class="btn btn-sm" name="searchType" id="agencyCnt" data-type="B" data-src="allMemberList" data-act="clickTypeBtn"></button>
+	                  				</a>                  
+	                			</li>
+	                			<li class="btnCtrlWrap mambership">
+	                  				<a href="javascript:;">
+	                    				<button type="button" class="btn btn-sm" name="searchType" id="demandCnt" data-type="D" data-src="allMemberList" data-act="clickTypeBtn"></button>
+	                  				</a>                  
+	                			</li>
+	                			<li class="btnCtrlWrap mambership">
+	                  				<a href="javascript:;">
+	                    				<button type="button" class="btn btn-sm" name="searchType" id="supplyCnt" data-type="S" data-src="allMemberList" data-act="clickTypeBtn"></button>
+	                  				</a>                  
+	                			</li>           
+	              			</ul>
+	            		</div>
+	            		<fieldset>
+	              			<div class="mambership-selectp">
+	                			<select name="" id="searchType" class="selectpicker">
+	               					<option value="company_name" selected>회원명</option>
+	               					<option value="uid">회원ID</option>
+	               				</select>
+	            			</div>
+	              			<legend class="blind">검색</legend>                
+	           				<span class="grSearch">
+	                			<input type="search" id="searchText" data-src="allMemberList" data-act="searchEnter"><button type="button" class="btn-sm" data-src="allMemberList" data-act="getSearch">검색</button>
+	              			</span>
+	            		</fieldset>
+	        		</div>
+	        		<!-- 테이블 / 시작 -->
+	        		<div class="tableWrap">
+	          			<div class="tableInner">
+	            			<table class="table mambership advTable9">
+	              				<colgroup>
+	                				<col width="150px">
+                                    <col width="290px">
+                                    <col width="200px">
+                                    <col width="200px">
+                                    <col width="200px">
+                                    <col width="*">
+	              				</colgroup>
+	              				<thead>
+	                				<tr>
+				                  		 <th>구분</th>
+                                         <th>회원명</th>
+                                         <th>회원 ID</th>
+                                         <th>가입일자</th>
+                                         <th>메일주소</th>
+                                         <th>E-mail 수신동의</th>
+	                				</tr>
+	              				</thead>
+	              				<tbody id="memberListBody">
+	              				</tbody>
+	           				</table>
+	          			</div>
+	        		</div>
+                    <div class="down-btn">
+                     <button type="button" class="btn-lg btn-dark" data-src="allMemberList" data-act="excelDownLoad">전체 회원 리스트 다운로드</button>
+                    </div> 
+	        		<!-- 전체 / 끝 -->
+	        		<!-- 페이지네이션 / 시작 -->
+	        		<nav aria-label="Page navigation">
+	          			<ul class="pagination justify-content-center" id="listPage">
+	          			</ul>
+	        		</nav>
+	        		<!-- 페이지네이션 / 끝 -->
+	      		</div>
+	      	</div>
+		</div>
+	</main>
+</th:block>
+<th:block layout:fragment="script">
+	<script th:src="@{/js/page/admin/member/entire/list.js}"></script>
+	<script>
+		layout.setCallback(allMemberList.init);
+	</script>
+</th:block>
+</html>

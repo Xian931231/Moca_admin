@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="content">
+   <main class="main-panel moCafePanel">
+      <div class="pagePath">
+        광고 관리<span>&gt;</span>종료광고 관리
+      </div>
+      <div class="content">
+        <div class="titleCont">
+          <h2>종료광고 관리</h2>
+        </div>
+        <div class="tab-content advTablesCpm moCafeCont">
+          <div class="moCafeFormWrap err">
+            <form action="" class="f-single">
+              <fieldset>
+                <legend class="blind">검색</legend>
+                <span class="grSearch">
+                  <select id="endReasonType" class="selectpicker" data-src="endList" data-act="changeEndReasonSearch">
+                    <option value="" selected>전체</option>
+                    <option value="1">기간 종료</option>
+                    <option value="2">목표 노출수 도달</option>
+                    <option value="3">긴급 종료</option>
+                  </select>
+                </span>
+                <span class="input-daterange" id="datepicker1">
+                  <label for="sDate">
+                    <input type="text" class="sDate form-control" id="searchStartDate" name="start" placeholder=""><i></i>
+                  </label>
+                  <span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+                  <label for="eData">
+                    <input type="text" class="eDate form-control" id="searchEndDate" name="end" placeholder=""><i></i>
+                  </label>
+                </span>
+                <span>
+                  <button type="button" class="btn-sm btn-clear" data-src="endList" data-act="clickSearch">조회</button>
+                </span>
+              </fieldset>
+            </form>
+          </div>
+          <!-- 종료 광고 테이블 / 시작 -->
+          <div class="tableWrap">
+            <div class="tableInner">
+              <table class="table err fin">
+                <colgroup>
+                  <col width="150px">
+                  <col width="150px">
+                  <col width="70px">
+                  <col width="385px">
+                  <col width="120px">
+                  <col width="140px">
+                  <col width="*">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>소속 대행사</th>
+                    <th>광고주</th>
+                    <th>과금방식</th>
+                    <th>광고명</th>
+                    <th>총 노출량</th>
+                    <th>종료 일시</th>
+                    <th>종료 사유</th>
+                  </tr>
+                </thead>
+                <tbody id="listBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 종료광고 테이블 / 끝 -->
+          <!-- 페이지네이션 / 시작 -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center" id="listPage">
+            </ul>
+          </nav>
+          <!-- 페이지네이션 / 끝 -->
+        </div>
+        <!--긴급 종료 버튼 모달(종료 사유 입력) : 시작-->
+        <div class="modal fade depoModal" id="stopReasonModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="depoRefLabel" aria-hidden="true">
+          <div class="modal-dialog modalInputFile">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">긴급 종료 사유</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <fieldset>
+                    <legend class="blind">긴급 종료</legend>
+                    <div class="vdSetWrap depo">
+                      <textarea class="commonTextarea" cols="100" rows="5" id="stopReason"></textarea>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--긴급 종료 버튼 모달(종료 사유 입력) : 끝-->
+      </div>
+    </main>
+</th:block>
+<th:block layout:fragment="script">
+	 <script th:src="@{/js/page/admin/campaign/end/list.js}"></script>
+        <script>
+            layout.setCallback(endList.init);
+        </script>
+</th:block>
+</html>

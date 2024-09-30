@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+   <th:block layout:fragment="content">
+      <main class="main-panel">
+         <div class="pagePath">
+            광고 리포트<span>&gt;</span>상품별 리포트
+         </div>
+         <div class="content repoContent">
+            <div class="titleCont">
+               <h2>상품별 리포트</h2>
+            </div>
+            <form action="" onsubmit="return false">
+               <fieldset>
+                  <legend class="blind">기간 선택</legend>
+                  <div class="repoStack1Wrap mocafe">
+                     <button type="button" class="btn-lg btn-dark" data-src="list" data-act="clickPopOpen">
+                     대상 상품 선택 &nbsp;<img src="imgs/icon_add.png" alt="">
+                     </button>
+                     <span>
+                     <span id="selectedProductList"></span>
+                     </span>
+                  </div>
+                  <div class="repoStack2Wrap">
+                     <span class="btnCtrlWrap">
+                        <span>조회 기간 &nbsp;</span>
+                        <span class="input-daterange">
+                           <label for="sDate">
+                           <input id="searchStartDate" type="text" class="sDate form-control" name="start" placeholder="">
+                           <i></i>
+                           </label>
+                           <select id="searchStartHour" name="selList4" class="selectpicker">
+                              <option value="00">00:00</option>
+                              <option value="01">01:00</option>
+                              <option value="02">02:00</option>
+                              <option value="03">03:00</option>
+                              <option value="04">04:00</option>
+                              <option value="05">05:00</option>
+                              <option value="06">06:00</option>
+                              <option value="07">07:00</option>
+                              <option value="08">08:00</option>
+                              <option value="09">09:00</option>
+                              <option value="10">10:00</option>
+                              <option value="11">11:00</option>
+                              <option value="12">12:00</option>
+                              <option value="13">13:00</option>
+                              <option value="14">14:00</option>
+                              <option value="15">15:00</option>
+                              <option value="16">16:00</option>
+                              <option value="17">17:00</option>
+                              <option value="18">18:00</option>
+                              <option value="19">19:00</option>
+                              <option value="20">20:00</option>
+                              <option value="21">21:00</option>
+                              <option value="22">22:00</option>
+                              <option value="23">23:00</option>
+                           </select>
+                           <span>&nbsp;~&nbsp;</span>
+                           <label for="eData">
+                           <input id="searchEndDate" type="text" class="eDate form-control" name="end" placeholder=""><i></i>
+                           </label>
+                           <select id="searchEndHour" name="selList8" class="selectpicker">
+                              <option value="01">01:00</option>
+                              <option value="02">02:00</option>
+                              <option value="03">03:00</option>
+                              <option value="04">04:00</option>
+                              <option value="05">05:00</option>
+                              <option value="06">06:00</option>
+                              <option value="07">07:00</option>
+                              <option value="08">08:00</option>
+                              <option value="09">09:00</option>
+                              <option value="10">10:00</option>
+                              <option value="11">11:00</option>
+                              <option value="12">12:00</option>
+                              <option value="13">13:00</option>
+                              <option value="14">14:00</option>
+                              <option value="15">15:00</option>
+                              <option value="16">16:00</option>
+                              <option value="17">17:00</option>
+                              <option value="18">18:00</option>
+                              <option value="19">19:00</option>
+                              <option value="20">20:00</option>
+                              <option value="21">21:00</option>
+                              <option value="22">22:00</option>
+                              <option value="23">23:00</option>
+                              <option value="24" selected>24:00</option>
+                           </select>
+                        </span>
+                     </span>
+                     <span>
+                     <button type="button" class="btn-sm btn-clear" data-src="list" data-act="clickSearch">조회</button>
+                     </span>
+                  </div>
+               </fieldset>
+            </form>
+            <div class="tab-content repoTables mocafeTables">
+               <div class="tab-pane fade show active">
+                  <!-- 매체별 그래프 / 시작 -->
+                  <div id="chartTableList" class="chartWrap horizonBar">
+                  </div>
+                  <!-- 매체별 그래프 / 끝 -->
+                  <p id="searchDateDiv" class="defineDateRange">
+                  </p>
+                  <!--테이블 : 매체별 / 시작-->
+                  <div class="tableWrap repoWrap">
+                     <div class="tableInner repoTableInner mocafe3">
+                        <table class="table">
+                           <colgroup>
+                              <col width="17%">
+                              <col width="24%">
+                              <col width="34%">
+                              <col width="*">
+                           </colgroup>
+                           <thead>
+                              <tr>
+                                 <th scope="col">매체</th>
+                                 <th scope="col">상품명</th>
+                                 <th scope="col">디바이스명</th>
+                                 <th scope="col">노출량</th>
+                              </tr>
+                           </thead>
+                           <tbody id="listBody">
+                           </tbody>
+                        </table>
+                     </div>
+                     <!--테이블 푸터 픽스
+                        별도 div.tableFooterFix 로 헤더 생성-->
+                     <!--div.tableFooterFix 시작-->
+                     <div class="tableFooterFix repo med">
+                        <ul>
+                           <li>합계</li>
+                           <li id="listBodyTotal"></li>
+                        </ul>
+                     </div>
+                     <!--div.tableFooterFix 끝-->
+                  </div>
+                  <div>
+                     <button id="btnExcelDown" type="button" class="btn-lg btn-dark" data-src="list" data-act="clickExcelDownload" style="display: none;">EXCEL로 다운 받기</button>
+                  </div>
+                  <!--테이블 : 매체별 / 끝-->
+               </div>
+            </div>
+            <!-- 대상 상품 선택 모달 시작 -->
+            <div class="modal fade" id="productPop" data-keyboard="false" tabindex="-1" aria-labelledby="cusViewPickerLabel" aria-hidden="true">
+               <div class="modal-dialog categoryDialog cusViewDialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">상품 선택</h5>
+                        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="modalSearchBox mocafe">
+                           <label for="modalSearch"></label>
+                           <input id="popSearchValue" type="search" placeholder="매체/구분/상품명" data-src="list" data-act="inputPopSearch">
+                           <button type="button" class="btn-sm btn-dark" data-src="list" data-act="clickPopSearch">검색</button>
+                        </div>
+                        <div class="modalTableWrap">
+                           <div class="modalTableInner mocafe mocafe3">
+                              <table class="table">
+                                 <colgroup>
+                                    <col width="148.39px">
+                                    <col width="110.44px">
+                                    <col width="193.44px">
+                                    <col width="*">
+                                 </colgroup>
+                                 <thead>
+                                    <tr>
+                                       <th scope="col">매체</th>
+                                       <th scope="col">구분</th>
+                                       <th scope="col">상품</th>
+                                       <th scope="col">선택</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="popListBody">
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                        <div class="cusPickedWrap mat">
+                           <ul id="popSelectedList">
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-dark" data-src="list" data-act="clickPopAdjust">선택 상품 반영</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- 대상 상품 선택 모달 끝 -->
+         </div>
+      </main>
+   </th:block>
+   <th:block layout:fragment="script">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+      <script th:src="@{/js/page/admin/report/productList.js}">
+      </script>
+      <script>
+      	layout.setCallback(productList.init);
+      </script>
+   </th:block>
+</html>

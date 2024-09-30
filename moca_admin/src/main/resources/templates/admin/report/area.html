@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+   <th:block layout:fragment="content">
+      <main class="main-panel">
+         <div class="pagePath">
+            광고 리포트<span>&gt;</span>지역별 리포트
+         </div>
+         <div class="content repoContent">
+            <div class="titleCont">
+               <h2>지역별 리포트</h2>
+            </div>
+            <form action="" onsubmit="return false">
+               <fieldset>
+                  <legend class="blind">지역별 선택</legend>
+                  <div class="repoStack1Wrap mocafe">
+                     <button type="button" class="btn-lg btn-dark" data-src="list" data-act="clickPopOpen">
+                     조회 광고주 선택 &nbsp;<img src="imgs/icon_add.png" alt="">
+                     </button>
+                     <span>
+                     <span id="selectedMemberList"></span>
+                     </span>
+                  </div>
+                  <div class="repoStack2Wrap mocafe mocafe4">
+                     <span class="btnCtrlWrap">
+                        <select id="selectSiList" class="selectpicker" title="전체 지역">
+                        </select>
+                        <select id="selectGuList" class="selectpicker" title="전체 지역">
+                        </select>
+                     </span>
+                     <span>
+                        <span>조회 기간 &nbsp;</span>
+                        <span class="input-daterange">
+                           <label for="sDate">
+                           <input id="searchStartDate" type="text" class="sDate form-control" name="start" placeholder="">
+                           <i></i>
+                           </label>
+                           <select id="searchStartHour" name="selList4" class="selectpicker">
+                              <option value="00">00:00</option>
+                              <option value="01">01:00</option>
+                              <option value="02">02:00</option>
+                              <option value="03">03:00</option>
+                              <option value="04">04:00</option>
+                              <option value="05">05:00</option>
+                              <option value="06">06:00</option>
+                              <option value="07">07:00</option>
+                              <option value="08">08:00</option>
+                              <option value="09">09:00</option>
+                              <option value="10">10:00</option>
+                              <option value="11">11:00</option>
+                              <option value="12">12:00</option>
+                              <option value="13">13:00</option>
+                              <option value="14">14:00</option>
+                              <option value="15">15:00</option>
+                              <option value="16">16:00</option>
+                              <option value="17">17:00</option>
+                              <option value="18">18:00</option>
+                              <option value="19">19:00</option>
+                              <option value="20">20:00</option>
+                              <option value="21">21:00</option>
+                              <option value="22">22:00</option>
+                              <option value="23">23:00</option>
+                           </select>
+                           <span>&nbsp;~&nbsp;</span>
+                           <label for="eData">
+                           <input id="searchEndDate" type="text" class="eDate form-control" name="end" placeholder=""><i></i>
+                           </label>
+                           <select id="searchEndHour" name="selList8" class="selectpicker">
+                              <option value="01">01:00</option>
+                              <option value="02">02:00</option>
+                              <option value="03">03:00</option>
+                              <option value="04">04:00</option>
+                              <option value="05">05:00</option>
+                              <option value="06">06:00</option>
+                              <option value="07">07:00</option>
+                              <option value="08">08:00</option>
+                              <option value="09">09:00</option>
+                              <option value="10">10:00</option>
+                              <option value="11">11:00</option>
+                              <option value="12">12:00</option>
+                              <option value="13">13:00</option>
+                              <option value="14">14:00</option>
+                              <option value="15">15:00</option>
+                              <option value="16">16:00</option>
+                              <option value="17">17:00</option>
+                              <option value="18">18:00</option>
+                              <option value="19">19:00</option>
+                              <option value="20">20:00</option>
+                              <option value="21">21:00</option>
+                              <option value="22">22:00</option>
+                              <option value="23">23:00</option>
+                              <option value="24" selected>24:00</option>
+                           </select>
+                        </span>
+                        <button type="button" class="btn-sm btn-clear" data-src="list" data-act="clickSearch">조회</button>
+                     </span>
+                  </div>
+               </fieldset>
+            </form>
+            <div class="tab-content repoTables mocafeTables">
+               <!-- 그래프1 - 매체별 그래프 / 시작 -->
+               <div class="chartWrap horizonBar">
+                  <!-- 지도 api 삽입란 -->
+                  <div class="chartMed chM5">
+                     <div id="mapMarkerDiv"></div>
+                     <!--지역별 노출량말풍선 마커 영역 각각 a 태그로 삽입-->
+                     <!--지도 확대/축소 컨트롤 영역
+                     <div>
+                        <div class="map_controls wrap">
+                           <div class="map_controls zoom">
+                              <button class="btn-mapControl" aria-label="지도확대" aria-disabled="false"><img th:src="@{/assets/imgs/btn_plus.png}" alt="" data-src="list" data-act="clickMapZoom" data-type="plus"></button>
+                              <button class="btn-mapControl" aria-label="지도축소" aria-disabled="false"><img th:src="@{/assets/imgs/btn_minus.png}" alt="" data-src="list" data-act="clickMapZoom" data-type="minus"></button>
+                           </div>
+                        </div>
+                     </div> -->
+                     <div id="mapWrap" class="mapWrap">
+                        
+                     </div>
+                     <!--임시이미지 대체-->
+                  </div>
+               </div>
+               <!-- 그래프 - 지역별 그래프 / 끝 -->
+               <p id="searchDateDiv" class="defineDateRange"></p>
+               <!--테이블 : 지역별 / 시작-->
+               <div class="tableWrap repoWrap">
+                  <div class="tableInner repoTableInner mocafe4">
+                     <table class="table">
+                        <colgroup>
+                           <col width="20%">
+                           <col width="20%">
+                           <col width="20%">
+                           <col width="20%">
+                           <col width="*">
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th scope="col">대행사</th>
+                              <th scope="col">광고</th>
+                              <th scope="col">지역</th>
+                              <th scope="col">지역 구분</th>
+                              <th scope="col">노출량</th>
+                           </tr>
+                        </thead>
+                        <tbody id="listBody">
+                        </tbody>
+                     </table>
+                  </div>
+                  <!--테이블 푸터 픽스
+                     별도 div.tableFooterFix 로 헤더 생성-->
+                  <!--div.tableFooterFix 시작-->
+                  <div class="tableFooterFix repoMocafe4">
+                     <ul>
+                        <li>합계</li>
+                        <li id="listBodyTotal"></li>
+                     </ul>
+                  </div>
+                  <!--div.tableFooterFix 끝-->
+               </div>
+               <!--테이블 : 지역별 / 끝-->
+               <div class="repoBtnBtmWrap">
+                  <button id="btnExcelDown" type="button" class="btn-lg btn-dark" data-src="list" data-act="clickExcelDownload" style="display: none;">EXCEL로 다운 받기</button>
+               </div>
+            </div>
+            <!-- 조회 광고주 선택 모달 시작 -->
+            <div class="modal fade" id="memberPop" data-keyboard="false" tabindex="-1" aria-labelledby="cusViewPickerLabel" aria-hidden="true">
+               <div class="modal-dialog categoryDialog cusViewDialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">광고주 선택</h5>
+                        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="modalSearchBox mocafe">
+                           <label for="popSearchValue"></label>
+                           <input type="search" id="popSearchValue" placeholder="대행사/광고주 명" data-src="list" data-act="inputPopSearch">
+                           <button type="button" class="btn-sm btn-dark" data-src="list" data-act="clickPopSearch">검색</button>
+                        </div>
+                        <div class="modalTableWrap">
+                           <div class="modalTableInner mocafe mocafe1">
+                              <!--3셀짜리-->
+                              <table class="table">
+                                 <colgroup>
+                                    <col width="216.8px">
+                                    <col width="216.8px">
+                                    <col width="*">
+                                 </colgroup>
+                                 <thead>
+                                    <tr>
+                                       <th scope="col">대행사</th>
+                                       <th scope="col">광고주</th>
+                                       <th scope="col">선택</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="popListBody">
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!--테이블 : 소진액 / 시작-->
+                        </div>
+                        <div class="cusPickedWrap">
+                           <ul id="popSelectedList">
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-dark" data-src="list" data-act="clickPopAdjust">선택 광고주 반영</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- 조회 광고주 선택 모달 끝 -->
+         </div>
+      </main>
+   </th:block>
+   <th:block layout:fragment="script">
+      <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7ns6lqd6n8"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+      <script th:src="@{/js/page/admin/report/areaList.js}"></script>
+      <script>
+         layout.setCallback(areaList.init)
+      </script>
+   </th:block>
+</html>
